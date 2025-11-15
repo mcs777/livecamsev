@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería con Livecam Sevilla</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* Texto superior */
+    .top-text {
+      font-family: Impact, sans-serif;
+      font-size: 2.5rem;
+      color: red;
+      text-shadow: 2px 2px 5px black;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    /* Reproductor principal */
+    .player-container {
+      position: relative;
+      width: 800px;
+      height: 450px;
+      border: 5px solid white;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: black;
+      margin-bottom: 20px;
+    }
+
+    video, .cam-image {
+      width: 100%;
+      height: 100%;
+      display: none;
+      object-fit: cover;
+    }
+
+    /* Texto inferior */
+    .bottom-text {
+      font-family: Impact, sans-serif;
+      font-size: 2rem;
+      color: red;
+      text-shadow: 2px 2px 5px black;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-text">ESTÁS SIENDO VIDEOVIGILADO</div>
+
+  <div class="player-container">
+    <video id="mainVideo"></video>
+    <img class="cam-image" src="https://cdn.skylinewebcams.com/_843.jpg" alt="Livecam Sevilla">
+    <div class="overlay-text">ESTÁS SIENDO VIDEOVIGILADO</div>
+  </div>
+
+  <!-- Easter Egg: icono de warning centrado -->
+  <a id="easterEgg" href="https://www.skylinewebcams.com/en/webcam/spain/sevilla/. sevilla-cathedral.html" target="_blank">
+    ⚠️
+  </a>
+</div>
+
+  <div class="bottom-text">Hola</div>
+
+  <script>
+    const videoFiles = [
+      "1.mp4", "2-2.mp4", "3-3.mp4", "4-4.mp4", "5-5.mp4",
+      "6-6.mp4", "7-7.mp4", "8.mp4", "9.mp4", "10.mp4", "11.mp4"
+    ];
+
+    const mainVideo = document.getElementById('mainVideo');
+    const camImage = document.querySelector('.cam-image');
+    const overlayText = document.querySelector('.overlay-text');
+
+    let currentIndex = 0;
+
+    function playNext() {
+      if (currentIndex < videoFiles.length) {
+        mainVideo.src = videoFiles[currentIndex];
+        mainVideo.style.display = 'block';
+        mainVideo.play();
+        camImage.style.display = 'none';
+        overlayText.style.display = 'none';
+
+        mainVideo.onended = () => {
+          mainVideo.style.display = 'none';
+          camImage.style.display = 'block';
+          overlayText.style.display = 'block';
+
+          setTimeout(() => {
+            camImage.style.display = 'none';
+            overlayText.style.display = 'none';
+            currentIndex++;
+            playNext();
+          }, 5000); // Mostrar cam 5 segundos
+        };
+      } else {
+        currentIndex = 0;
+        playNext(); // reinicia el ciclo
+      }
+    }
+
+    window.onload = playNext;
+  </script>
+
+</body>
+</html>
